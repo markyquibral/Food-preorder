@@ -1,1 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kain tayo!! — Profile</title>
+<style>
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none; -webkit-user-select: none;
+  }
+  body { background: #fdf3df; color: #222; max-width: 480px; margin: 0 auto; min-height: 100vh; padding-bottom: 84px; }
+  a { text-decoration: none; color: inherit; }
+
+  /* ===== Header ===== */
+  .header {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; align-items: center;
+    padding: 14px 16px; background: #fdf3df;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; }
+  .brand .logo {
+    width: 30px; height: 30px; border: 2.5px solid #333; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center; font-size: 14px;
+  }
+
+  /* ===== Corner bell ===== */
+  .icon-btn {
+    position: fixed; top: 12px; right: 12px; z-index: 99;
+    background: #fff; border: 1.5px solid #e5dfd0; border-radius: 999px;
+    width: 44px; height: 44px; font-size: 21px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform .1s; padding: 0;
+  }
+  .icon-btn:active { transform: scale(.88); background: #ffdcae; }
+
+  h1 { font-size: 26px; padding: 10px 16px 14px; }
+
+  /* ===== Cards ===== */
+  .section { background: #fff; border-radius: 18px; margin: 12px 16px; padding: 22px; }
+  .card-title { font-size: 21px; font-weight: 800; margin-bottom: 10px; }
+
+  /* ===== Profile card ===== */
+  .avatar {
+    width: 76px; height: 76px; border-radius: 999px; background: #ffe0b0;
+    color: #e8590c; font-size: 36px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 14px;
+  }
+  .username { font-size: 22px; font-weight: 800; }
+  .user-sub { color: #888; font-size: 15.5px; line-height: 1.4; margin-top: 4px; }
+
+  /* ===== Rows (label left, value right) ===== */
+  .row {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+    padding: 9px 0; font-size: 17px;
+  }
+  .row .lbl { color: #333; }
+  .row .val { color: #777; text-align: right; }
+
+  /* ===== Pill buttons ===== */
+  .pill-btn {
+    display: inline-block; border: 1.5px solid #e0d9c8; background: #fff;
+    border-radius: 999px; padding: 12px 26px; font-size: 16.5px; cursor: pointer;
+    margin-top: 12px; transition: transform .1s, background .1s;
+  }
+  .pill-btn:active { transform: scale(.93); background: #fff3e0; }
+
+  /* ===== Bottom nav (fixed) ===== */
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0; margin: 0 auto; max-width: 480px;
+    display: flex; justify-content: space-around;
+    background: #fff; border-top: 1px solid #eee; padding: 10px 0 14px; z-index: 90;
+  }
+  .nav-item {
+    text-align: center; font-size: 12px; color: #777; width: 70px; cursor: pointer;
+    padding: 4px 0; border-radius: 12px; transition: transform .1s;
+  }
+  .nav-item .nav-ico { font-size: 20px; display: block; margin-bottom: 2px; }
+  .nav-item:active { transform: scale(.88); }
+  .nav-item.active { color: #e8590c; font-weight: 700; background: #ffdcae; }
+  .nav-badge {
+    position: absolute; top: 0; right: 14px; background: #e8590c; color: #fff;
+    font-size: 11px; font-weight: 700; border-radius: 999px; padding: 2px 7px;
+  }
+  .nav-wrap { position: relative; }
+</style>
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<div class="header">
+  <div class="brand"><span class="logo">🍽️</span> Kain tayo!! <span style="color:#999;font-weight:400">▾</span></div>
+  <button class="icon-btn">🔔</button>
+</div>
+
+<h1>Profile</h1>
+
+<!-- ===== Profile card ===== -->
+<div class="section">
+  <div class="avatar">M</div>
+  <div class="username">markyquibral</div>
+  <div class="user-sub">Student/Employee ID CA202403380 · Cainta Main Branch</div>
+</div>
+
+<!-- ===== Recent orders ===== -->
+<div class="section">
+  <div class="card-title">Recent orders</div>
+  <div class="row"><span class="lbl">Today · Champorado, Lugaw with Egg</span><span class="val">₱72</span></div>
+  <div class="row"><span class="lbl">Today · Halo-Halo (Regular) ×2</span><span class="val">₱110</span></div>
+  <div class="row"><span class="lbl">Today · Longsilog</span><span class="val">₱110</span></div>
+  <a href="orders.html" class="pill-btn">View all</a>
+</div>
+
+<!-- ===== Notifications ===== -->
+<div class="section">
+  <div class="card-title">Notifications</div>
+  <div class="row"><span class="lbl">Order #1008 is pending</span><span class="val">Now</span></div>
+  <div class="row"><span class="lbl">Welcome to Kain tayo!! Pre-order your meals anytime.</span><span class="val">Today</span></div>
+</div>
+
+<!-- ===== Account ===== -->
+<div class="section">
+  <div class="card-title">Account</div>
+  <div class="row"><span class="lbl">Student ID</span><span class="val">CA202403380</span></div>
+  <div class="row"><span class="lbl">Full Name</span><span class="val">markyquibral</span></div>
+  <div class="row"><span class="lbl">Email/Username</span><span class="val">markyquibral</span></div>
+  <div class="row"><span class="lbl">Contact Number</span><span class="val">09306612056</span></div>
+  <div class="row"><span class="lbl">Last login</span><span class="val">Oct 11, 8:53 AM</span></div>
+</div>
+
+<!-- ===== Settings ===== -->
+<div class="section">
+  <div class="card-title">Settings</div>
+  <div class="row"><span class="lbl">Default branch</span><span class="val">Cainta Main Branch</span></div>
+  <div class="row"><span class="lbl">Payment method</span><span class="val">Cash</span></div>
+  <span class="pill-btn">Log out</span>
+</div>
+
+<!-- ===== Bottom nav ===== -->
+<div class="bottom-nav">
+  <div class="nav-item"><a href="food_cart.html"><span class="nav-ico">🏠</span>Home</a></div>
+  <div class="nav-item"><a href="orders.html"><span class="nav-ico">📋</span>Orders</a></div>
+  <div class="nav-item">
+    <a href="updates.html"><div class="nav-wrap"><span class="nav-ico">🔔</span><span class="nav-badge">2</span></div>Updates</a>
+  </div>
+  <div class="nav-item active"><span class="nav-ico">👤</span>Profile</div>
+</div>
+
+</body>
+                                                                                                                                </html>
 
