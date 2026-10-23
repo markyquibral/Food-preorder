@@ -1,1 +1,230 @@
+<!DOCTYPE html>
+<html lang="fil">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kain tayo!! - Digital Receipt</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Inter', -apple-system, sans-serif;
+    }
+
+    body {
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+        min-height: 100vh;
+    }
+
+    .receipt {
+        width: 100%;
+        max-width: 420px;
+        background: #fff;
+        padding: 25px 20px;
+    }
+
+    /* Header */
+    .header {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .logo-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .logo {
+        width: 32px;
+        height: 32px;
+        background: #444;
+        border-radius: 6px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+    }
+
+    .header h1 {
+        font-size: 26px;
+        font-weight: 800;
+        color: #111;
+    }
+
+    .header .subtitle {
+        font-size: 15px;
+        color: #888;
+        font-weight: 400;
+        margin-top: 2px;
+    }
+
+    /* Dashed dividers */
+    .divider {
+        border-top: 3px dashed #f0d99a;
+        margin: 18px 0;
+    }
+
+    /* Info rows */
+    .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 7px 0;
+    }
+
+    .row .label {
+        font-size: 15px;
+        color: #999;
+        font-weight: 400;
+    }
+
+    .row .value {
+        font-size: 16px;
+        color: #111;
+        font-weight: 600;
+    }
+
+    .row .value.bold {
+        font-weight: 800;
+        font-size: 18px;
+    }
+
+    /* Items */
+    .items {
+        padding: 5px 0;
+    }
+
+    .item {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        font-size: 16px;
+        font-weight: 600;
+        color: #111;
+    }
+
+    /* Total */
+    .total-row .label {
+        font-size: 20px;
+        font-weight: 800;
+        color: #111;
+    }
+
+    .total-row .value {
+        font-size: 20px;
+        font-weight: 800;
+        color: #111;
+    }
+
+    /* Footer note */
+    .note {
+        text-align: center;
+        font-size: 15px;
+        color: #888;
+        line-height: 1.4;
+        margin: 5px 0 20px;
+    }
+
+    /* Close button na may SQUISH EFFECT */
+    .close-btn {
+        width: 100%;
+        padding: 18px;
+        background: #f5a623;
+        border: none;
+        border-radius: 14px;
+        font-size: 18px;
+        font-weight: 800;
+        color: #111;
+        cursor: pointer;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
+                    background 0.2s;
+    }
+
+    .close-btn:hover {
+        background: #f7b03a;
+    }
+
+    /* SQUISH kapag pinipindot — masikip pababa, kunting liit sa gilid */
+    .close-btn:active {
+        transform: scale(0.92, 0.85);
+        background: #e89a15;
+    }
+</style>
+</head>
+<body>
+
+<div class="receipt">
+    <div class="header">
+        <div class="logo-row">
+            <span class="logo">🍱</span>
+            <h1>Kain tayo!!</h1>
+        </div>
+        <p class="subtitle">Digital Receipt</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="row">
+        <span class="label">Receipt no.</span>
+        <span class="value bold">PO-1008</span>
+    </div>
+    <div class="row">
+        <span class="label">Date</span>
+        <span class="value">Today, 8:53 AM</span>
+    </div>
+    <div class="row">
+        <span class="label">Branch</span>
+        <span class="value">Cainta Main Branch</span>
+    </div>
+    <div class="row">
+        <span class="label">Pickup time</span>
+        <span class="value bold">9:00 AM</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="items">
+        <div class="item">
+            <span>1 × Champorado</span>
+            <span>₱30</span>
+        </div>
+        <div class="item">
+            <span>1 × Lugaw with Egg</span>
+            <span>₱42</span>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="row total-row">
+        <span class="label">Total</span>
+        <span class="value">₱72</span>
+    </div>
+    <div class="row">
+        <span class="label">Payment</span>
+        <span class="value">Cash</span>
+    </div>
+    <div class="row">
+        <span class="label">Status</span>
+        <span class="value">Pay at pickup</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <p class="note">Show this receipt when claiming your order.<br>Thank you!</p>
+
+    <button class="close-btn">Close</button>
+</div>
+
+</body>
+          </html>
 
