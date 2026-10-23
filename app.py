@@ -27,68 +27,67 @@ with app.app_context():
 def index():
     return redirect(url_for("login"))
 
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        user = User.query.filter_by(email=request.form.get("email"), password=request.form.get("password")).first()
-        if user:
-            session['user_id'] = user.id
-            session['email'] = user.email
-            return redirect(url_for("home"))
-        return "Mali email o password"
-    return render_template("login.html")
 
-@app.route("/register", methods=["GET", "POST"])
+@app.route("/login")
+def login():
+    return render_template("Login.html")
+
+
+@app.route("/register")
 def register():
-    if request.method == "POST":
-        if User.query.filter_by(email=request.form.get("email")).first():
-            return "May account na!"
-        db.session.add(User(email=request.form.get("email"), password=request.form.get("password")))
-        db.session.commit()
-        return redirect(url_for("login"))
-    return render_template("Signup.html")
+    return render_template("Create_account.html")
+
 
 @app.route("/home")
 def home():
-    if 'user_id' not in session: return redirect(url_for("login"))
     return render_template("home.html")
 
-# --- DITO YUNG TINATANONG MO ---
 
 @app.route("/orders")
 def orders():
-    if 'user_id' not in session: return redirect(url_for("login"))
-    # Kunin lang order ng naka-login
-    my_orders = Order.query.filter_by(user_id=session['user_id']).order_by(Order.date.desc()).all()
-    return render_template("Orders.html", orders=my_orders)
+    return render_template("Orders.html")
+
 
 @app.route("/updates")
 def updates():
-    if 'user_id' not in session: return redirect(url_for("login"))
-    # Dito makikita status kung "Preparing" na o "Ready for pickup"
-    my_orders = Order.query.filter_by(user_id=session['user_id']).order_by(Order.date.desc()).all()
-    return render_template("updates.html", orders=my_orders)
+    return render_template("Updates.html")
+
 
 @app.route("/profile")
 def profile():
-    if 'user_id' not in session: return redirect(url_for("login"))
-    user = User.query.get(session['user_id'])
-    total_orders = Order.query.filter_by(user_id=session['user_id']).count()
-    return render_template("profile.html", user=user, total_orders=total_orders)
+    return render_template("profile.html")
 
-@app.route("/logout")
-def logout():
-    session.clear()
-    return redirect(url_for("login"))
 
-# Example: pag nag-order sa snacks
-@app.route("/order/<category>/<food>")
-def make_order(category, food):
-    if 'user_id' not in session: return redirect(url_for("login"))
-    new_order = Order(food_name=food, category=category, user_id=session['user_id'])
-    db.session.add(new_order)
-    db.session.commit()
-    return redirect(url_for("orders"))
+@app.route("/receipt")
+def receipt():
+    return render_template("digital_receipt.html")
+
+
+@app.route("/snacks")
+def snacks():
+    return render_template("Snacks_menu.html")
+
+
+@app.route("/lunch")
+def lunch():
+    return render_template("Lunch_menu.html")
+
+
+@app.route("/dinner")
+def dinner():
+    return render_template("Dinner_menu.html")
+
+
+@app.route("/desserts")
+def desserts():
+    return render_template("Dessert_menu.html")
+
+
+@app.route("/beverages")
+def beverages():
+    return render_template("Beverages_menu.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
+
