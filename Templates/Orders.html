@@ -1,1 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kain tayo!! — Order history</title>
+<style>
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none; -webkit-user-select: none;
+  }
+  body { background: #fdf3df; color: #222; max-width: 480px; margin: 0 auto; min-height: 100vh; }
+  a { text-decoration: none; color: inherit; }
+
+  /* ===== Header ===== */
+  .header {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; align-items: center;
+    padding: 14px 16px; background: #fdf3df;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; }
+  .brand .logo {
+    width: 30px; height: 30px; border: 2.5px solid #333; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center; font-size: 14px;
+  }
+
+  /* ===== Corner bell ===== */
+  .icon-btn {
+    position: fixed; top: 12px; right: 12px; z-index: 99;
+    background: #fff; border: 1.5px solid #e5dfd0; border-radius: 999px;
+    width: 44px; height: 44px; font-size: 21px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform .1s; padding: 0;
+  }
+  .icon-btn:active { transform: scale(.88); background: #ffdcae; }
+
+  h1 { font-size: 26px; padding: 10px 16px 14px; }
+
+  /* ===== History card with horizontal scroll ===== */
+  .section { background: #fff; border-radius: 18px; margin: 12px 16px; padding: 8px 0 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { border-collapse: collapse; min-width: 720px; width: 100%; }
+  th {
+    text-align: left; color: #999; font-size: 15px; font-weight: 600;
+    padding: 18px 16px 12px; border-bottom: 1.5px solid #f0ead9; white-space: nowrap;
+  }
+  td {
+    padding: 18px 16px; font-size: 16px; vertical-align: top;
+    border-bottom: 1.5px solid #f0ead9;
+  }
+  tr:last-child td { border-bottom: none; }
+  td.day, td.time, td.branch, td.pickup { white-space: nowrap; }
+  td.items { min-width: 170px; line-height: 1.4; }
+  td.total { white-space: nowrap; font-weight: 700; }
+
+  /* ===== Status pills ===== */
+  .status {
+    display: inline-block; padding: 8px 14px; border-radius: 10px;
+    font-size: 14px; font-weight: 700; white-space: nowrap;
+  }
+  .status.pending { background: #fff3c4; color: #a07d00; }
+  .status.served  { background: #d6f5d6; color: #2e7d32; }
+
+  /* ===== View button ===== */
+  .view-btn {
+    display: inline-block; border: 1.5px solid #e0d9c8; background: #fff;
+    border-radius: 999px; padding: 10px 22px; font-size: 15px; cursor: pointer;
+    white-space: nowrap; transition: transform .1s, background .1s;
+  }
+  .view-btn:active { transform: scale(.92); background: #fff3e0; }
+
+  /* ===== Bottom nav (Orders active with pill highlight) ===== */
+  .bottom-nav {
+    position: sticky; bottom: 0; display: flex; justify-content: space-around;
+    background: #fff; border-top: 1px solid #eee; padding: 10px 0 14px; margin-top: 20px;
+  }
+  .nav-item {
+    text-align: center; font-size: 12px; color: #777; width: 70px; cursor: pointer;
+    padding: 4px 0; border-radius: 12px; transition: transform .1s;
+  }
+  .nav-item .nav-ico { font-size: 20px; display: block; margin-bottom: 2px; }
+  .nav-item:active { transform: scale(.88); }
+  .nav-item.active { color: #e8590c; font-weight: 700; background: #ffdcae; }
+  .nav-badge {
+    position: absolute; top: 0; right: 14px; background: #e8590c; color: #fff;
+    font-size: 11px; font-weight: 700; border-radius: 999px; padding: 2px 7px;
+  }
+  .nav-wrap { position: relative; }
+</style>
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<div class="header">
+  <div class="brand"><span class="logo">🍽️</span> Kain tayo!! <span style="color:#999;font-weight:400">▾</span></div>
+  <button class="icon-btn">🔔</button>
+</div>
+
+<h1>Order history</h1>
+
+<!-- ===== Orders table (scroll sideways to see all columns) ===== -->
+<div class="section">
+  <table>
+    <tr>
+      <th>Day</th><th>Time</th><th>Branch</th><th>Pickup</th><th>Items</th>
+      <th>Total</th><th>Status</th><th>Receipt</th>
+    </tr>
+    <tr>
+      <td class="day">Today</td><td class="time">8:53 AM</td><td class="branch">Cainta Main Branch</td>
+      <td class="pickup">9:00 AM</td><td class="items">Champorado, Lugaw with Egg</td>
+      <td class="total">₱72</td><td><span class="status pending">Not yet served</span></td>
+      <td><span class="view-btn">View</span></td>
+    </tr>
+    <tr>
+      <td class="day">Today</td><td class="time">12:59 PM</td><td class="branch">Cainta Main Branch</td>
+      <td class="pickup">1:00 PM</td><td class="items">Halo-Halo (Regular) ×2</td>
+      <td class="total">₱110</td><td><span class="status served">Served</span></td>
+      <td><span class="view-btn">View</span></td>
+    </tr>
+    <tr>
+      <td class="day">Today</td><td class="time">11:59 AM</td><td class="branch">Cainta Main Branch</td>
+      <td class="pickup">12:00 PM</td><td class="items">Longsilog</td>
+      <td class="total">₱110</td><td><span class="status served">Served</span></td>
+      <td><span class="view-btn">View</span></td>
+    </tr>
+    <tr>
+      <td class="day">Today</td><td class="time">5:56 AM</td><td class="branch">Cainta Main Branch</td>
+      <td class="pickup">11:30 AM</td><td class="items">Fried Chicken with Rice, Fruit Salad (Small), Ube Ice Cream (3 Scoops), Lemon Iced Tea (Large)</td>
+      <td class="total">₱180</td><td><span class="status served">Served</span></td>
+      <td><span class="view-btn">View</span></td>
+    </tr>
+    <tr>
+      <td class="day">Today</td><td class="time">11:16 AM</td><td class="branch">Cainta Main Branch</td>
+      <td class="pickup">1:00 PM</td><td class="items">Chicken Adobo, Buko Pandan</td>
+      <td class="total">₱130</td><td><span class="status served">Served</span></td>
+      <td><span class="view-btn">View</span></td>
+    </tr>
+    <tr>
+      <td class="day">Today</td><td class="time">8:44 AM</td><td class="branch">Cainta Main Branch</td>
+      <td class="pickup">7:30 AM</td><td class="items">Longsilog</td>
+      <td class="total">₱110</td><td><span class="status served">Served</span></td>
+      <td><span class="view-btn">View</span></td>
+    </tr>
+    <tr>
+      <td class="day">Today</td><td class="time">9:21 AM</td><td class="branch">Cainta Main Branch</td>
+      <td class="pickup">7:00 AM</td><td class="items">Tocilog</td>
+      <td class="total">₱110</td><td><span class="status served">Served</span></td>
+      <td><span class="view-btn">View</span></td>
+    </tr>
+  </table>
+</div>
+
+<!-- ===== Bottom nav ===== -->
+<div class="bottom-nav">
+  <div class="nav-item"><a href="food_cart.html"><span class="nav-ico">🏠</span>Home</a></div>
+  <div class="nav-item active"><span class="nav-ico">📋</span>Orders</div>
+  <div class="nav-item">
+    <div class="nav-wrap"><span class="nav-ico">🔔</span><span class="nav-badge">2</span></div>Updates
+  </div>
+  <div class="nav-item"><span class="nav-ico">👤</span>Profile</div>
+</div>
+
+</body>
+                             </html>
 
