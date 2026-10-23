@@ -1,1 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kain tayo!! — Beverages menu</title>
+<style>
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none; -webkit-user-select: none;
+  }
+  body { background: #fdf3df; color: #222; max-width: 480px; margin: 0 auto; min-height: 100vh; padding-bottom: 84px; }
+  a { text-decoration: none; color: inherit; }
+  input.hide { position: absolute; opacity: 0; width: 0; height: 0; }
 
+  /* ===== Header ===== */
+  .header {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; align-items: center;
+    padding: 14px 16px; background: #fdf3df;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; }
+  .brand .logo {
+    width: 30px; height: 30px; border: 2.5px solid #333; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center; font-size: 14px;
+  }
+
+  /* ===== Corner bell ===== */
+  .icon-btn {
+    position: fixed; top: 12px; right: 12px; z-index: 99;
+    background: #fff; border: 1.5px solid #e5dfd0; border-radius: 999px;
+    width: 44px; height: 44px; font-size: 21px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform .1s; padding: 0;
+  }
+  .icon-btn:active { transform: scale(.88); background: #ffdcae; }
+
+  h1 { font-size: 26px; padding: 10px 16px 14px; }
+
+  .section { background: #fff; border-radius: 18px; margin: 12px 16px; padding: 18px; }
+  .section-label { color: #888; font-size: 16px; margin-bottom: 14px; }
+
+  /* ===== Categories ===== */
+  .cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 12px 16px; }
+  .cat-card {
+    background: #fff; border: 1.5px solid #e8e2d2; border-radius: 16px;
+    padding: 22px 6px; text-align: center; font-size: 17px; font-weight: 700;
+    cursor: pointer; transition: transform .1s, background .15s, box-shadow .15s;
+  }
+  .cat-card .emoji { font-size: 26px; display: block; margin-bottom: 6px; }
+  .cat-card:active { transform: scale(.94); background: #fff3e0; }
+  input:checked + .cat-card { background: #ffdcae; border-color: #f5b45c; box-shadow: 0 0 0 2px #f5b45c inset; }
+
+  /* ===== Lunch menu ===== */
+  .menu { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 12px 16px; }
+  .product-card {
+    background: #fff; border-radius: 18px; padding: 20px 16px;
+    border: 1.5px solid #eee6d4; border-top: 4px solid #f5b45c;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .product-card h3 { font-size: 18px; user-select: text; -webkit-user-select: text; }
+  .product-card p.desc { color: #555; font-size: 13.5px; line-height: 1.45; flex: 1; user-select: text; -webkit-user-select: text; }
+  .price { color: #e8590c; font-weight: 800; font-size: 17px; }
+  .add-btn {
+    background: #ffb84d; border-radius: 12px; padding: 12px;
+    font-size: 16px; font-weight: 800; width: 100%; cursor: pointer;
+    transition: transform .1s, background .15s; display: inline-block; text-align: center;
+  }
+  .add-btn:active { transform: scale(.93); background: #f59f2a; }
+
+  /* ===== Cart ===== */
+  .cart-title { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+  .cart-branch { color: #888; font-size: 15px; margin-bottom: 14px; }
+  .empty { color: #888; font-size: 16px; padding: 8px 0 4px; }
+  .total-row {
+    display: flex; justify-content: space-between; font-weight: 800;
+    font-size: 20px; border-top: 2px solid #eee; padding-top: 14px; margin-top: 10px;
+  }
+
+  /* ===== Chips ===== */
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip {
+    border: 1.5px solid #e0d9c8; background: #fff; border-radius: 999px;
+    padding: 10px 16px; font-size: 15px; font-weight: 600; color: #333;
+    cursor: pointer; transition: transform .1s, background .15s, box-shadow .15s;
+    display: inline-block; white-space: nowrap;
+  }
+  .chip:active { transform: scale(.92); background: #fff3e0; }
+  input:checked + .chip { background: #ffdcae; border-color: #f5b45c; box-shadow: 0 0 0 2px #f5b45c inset; }
+
+  /* ===== Pickup times ===== */
+  .sub-label { color: #888; font-size: 16px; margin: 16px 0 10px; }
+  .time-note { color: #666; font-size: 14.5px; margin-bottom: 12px; }
+  .time-slots { display: flex; flex-wrap: wrap; gap: 10px; }
+  .time-slot {
+    border: 1.5px solid #e0d9c8; background: #fff; border-radius: 999px;
+    padding: 10px 18px; font-size: 15px; cursor: pointer; white-space: nowrap;
+    transition: transform .1s, background .15s, box-shadow .15s; display: inline-block;
+  }
+  .time-slot:active { transform: scale(.92); background: #fff3e0; }
+  .time-slot.passed { color: #bbb; text-decoration: line-through; cursor: not-allowed; opacity: .7; }
+  input:checked + .time-slot { background: #ffdcae; border-color: #f5b45c; box-shadow: 0 0 0 2px #f5b45c inset; font-weight: 700; }
+
+  /* ===== Size / scoop option chips ===== */
+  .opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .opt-chip {
+    border: 1.5px solid #e0d9c8; background: #fff; border-radius: 999px;
+    padding: 7px 14px; font-size: 14px; color: #333; cursor: pointer;
+    transition: transform .1s, background .15s, box-shadow .15s; display: inline-block;
+  }
+  .opt-chip:active { transform: scale(.9); background: #fff3e0; }
+  input:checked + .opt-chip { background: #ffdcae; border-color: #f5b45c; box-shadow: 0 0 0 2px #f5b45c inset; font-weight: 700; }
+
+  /* ===== Disabled Add to cart (Price TBA) ===== */
+  .add-btn.off { background: #eee6d5; color: #999; cursor: not-allowed; }
+  .add-btn.off:active { transform: none; background: #eee6d5; }
+
+  .place-btn {
+    display: block; width: 100%; border-radius: 14px; padding: 18px;
+    font-size: 19px; font-weight: 800; margin-top: 22px; text-align: center;
+    background: #f5e3c0; color: #b3a488;   /* disabled look — no items yet */
+  }
+
+  /* ===== Bottom nav (fixed) ===== */
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0; margin: 0 auto; max-width: 480px;
+    display: flex; justify-content: space-around;
+    background: #fff; border-top: 1px solid #eee; padding: 10px 0 14px; z-index: 90;
+  }
+  .nav-item {
+    text-align: center; font-size: 12px; color: #777; width: 70px; cursor: pointer;
+    padding: 4px 0; border-radius: 12px; transition: transform .1s;
+  }
+  .nav-item .nav-ico { font-size: 20px; display: block; margin-bottom: 2px; }
+  .nav-item:active { transform: scale(.88); }
+  .nav-item.active { color: #e8590c; font-weight: 700; background: #ffdcae; }
+  .nav-badge {
+    position: absolute; top: 0; right: 14px; background: #e8590c; color: #fff;
+    font-size: 11px; font-weight: 700; border-radius: 999px; padding: 2px 7px;
+  }
+  .nav-wrap { position: relative; }
+</style>
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<div class="header">
+  <div class="brand"><span class="logo">🍽️</span> Kain tayo!! <span style="color:#999;font-weight:400">▾</span></div>
+  <button class="icon-btn">🔔</button>
+</div>
+
+<h1>Pre-order your meal</h1>
+
+<!-- ===== Categories (Beverages pre-selected) ===== -->
+<div class="cat-grid">
+  <input class="hide" type="radio" name="cat" id="c1"><label class="cat-card" for="c1"><span class="emoji">🌅</span>Breakfast</label>
+  <input class="hide" type="radio" name="cat" id="c2"><label class="cat-card" for="c2"><span class="emoji">☀️</span>Lunch</label>
+  <input class="hide" type="radio" name="cat" id="c3"><label class="cat-card" for="c3"><span class="emoji">🌙</span>Dinner</label>
+  <input class="hide" type="radio" name="cat" id="c4"><label class="cat-card" for="c4"><span class="emoji">🍟</span>Snacks</label>
+  <input class="hide" type="radio" name="cat" id="c5"><label class="cat-card" for="c5"><span class="emoji">🍰</span>Dessert</label>
+  <input class="hide" type="radio" name="cat" id="c6" checked><label class="cat-card" for="c6"><span class="emoji">🥤</span>Beverages</label>
+</div>
+
+<!-- ===== Beverages menu (press-only Add to cart) ===== -->
+<div class="menu">
+
+  <div class="product-card">
+    <h3>Lemon Iced Tea</h3>
+    <p class="desc">Refreshing lemon-flavored iced tea.</p>
+<div class="opts">
+    <input class="hide" type="radio" name="lt" id="lt-0"><label class="opt-chip" for="lt-0">Small</label>
+    <input class="hide" type="radio" name="lt" id="lt-1" checked><label class="opt-chip" for="lt-1">Regular</label>
+    <input class="hide" type="radio" name="lt" id="lt-2"><label class="opt-chip" for="lt-2">Large</label>
+  </div>
+    <div class="price">₱30</div>
+    <label class="add-btn">Add to cart</label>
+  </div>
+
+  <div class="product-card">
+    <h3>Peach Iced Tea</h3>
+    <p class="desc">Sweet peach-flavored iced tea.</p>
+<div class="opts">
+    <input class="hide" type="radio" name="pt" id="pt-0"><label class="opt-chip" for="pt-0">Small</label>
+    <input class="hide" type="radio" name="pt" id="pt-1" checked><label class="opt-chip" for="pt-1">Regular</label>
+    <input class="hide" type="radio" name="pt" id="pt-2"><label class="opt-chip" for="pt-2">Large</label>
+  </div>
+    <div class="price">₱30</div>
+    <label class="add-btn">Add to cart</label>
+  </div>
+
+  <div class="product-card">
+    <h3>Apple Iced Tea</h3>
+    <p class="desc">Crisp apple-flavored iced tea.</p>
+<div class="opts">
+    <input class="hide" type="radio" name="at" id="at-0"><label class="opt-chip" for="at-0">Small</label>
+    <input class="hide" type="radio" name="at" id="at-1" checked><label class="opt-chip" for="at-1">Regular</label>
+    <input class="hide" type="radio" name="at" id="at-2"><label class="opt-chip" for="at-2">Large</label>
+  </div>
+    <div class="price">₱30</div>
+    <label class="add-btn">Add to cart</label>
+  </div>
+
+  <div class="product-card">
+    <h3>Orange Juice</h3>
+    <p class="desc">Freshly squeezed orange juice.</p>
+<div class="opts">
+    <input class="hide" type="radio" name="oj" id="oj-0"><label class="opt-chip" for="oj-0">Small</label>
+    <input class="hide" type="radio" name="oj" id="oj-1" checked><label class="opt-chip" for="oj-1">Regular</label>
+    <input class="hide" type="radio" name="oj" id="oj-2"><label class="opt-chip" for="oj-2">Large</label>
+  </div>
+    <div class="price">₱35</div>
+    <label class="add-btn">Add to cart</label>
+  </div>
+
+  <div class="product-card">
+    <h3>Pineapple Juice</h3>
+    <p class="desc">Sweet and tangy pineapple juice.</p>
+<div class="opts">
+    <input class="hide" type="radio" name="pj" id="pj-0"><label class="opt-chip" for="pj-0">Small</label>
+    <input class="hide" type="radio" name="pj" id="pj-1" checked><label class="opt-chip" for="pj-1">Regular</label>
+    <input class="hide" type="radio" name="pj" id="pj-2"><label class="opt-chip" for="pj-2">Large</label>
+  </div>
+    <div class="price">₱40</div>
+    <label class="add-btn">Add to cart</label>
+  </div>
+
+  <div class="product-card">
+    <h3>Four Season Juice</h3>
+    <p class="desc">Mixed fruit juice blend.</p>
+<div class="opts">
+    <input class="hide" type="radio" name="fj" id="fj-0"><label class="opt-chip" for="fj-0">Small</label>
+    <input class="hide" type="radio" name="fj" id="fj-1" checked><label class="opt-chip" for="fj-1">Regular</label>
+    <input class="hide" type="radio" name="fj" id="fj-2"><label class="opt-chip" for="fj-2">Large</label>
+  </div>
+    <div class="price">₱35</div>
+    <label class="add-btn">Add to cart</label>
+  </div>
+
+  <div class="product-card">
+    <h3>Bottled Water 350mL</h3>
+    <p class="desc">Purified drinking water.</p>
+    <div class="price">₱10</div>
+    <label class="add-btn">Add to cart</label>
+  </div>
+
+  <div class="product-card">
+    <h3>Bottled Water 500mL</h3>
+    <p class="desc">Purified drinking water.</p>
+    <div class="price">₱15</div>
+    <label class="add-btn">Add to cart</label>
+  </div>
+
+  <div class="product-card">
+    <h3>Bottled Water 1 Liter</h3>
+    <p class="desc">Purified drinking water.</p>
+    <div class="price">₱25</div>
+    <label class="add-btn">Add to cart</label>
+  </div>
+
+</div>
+
+<!-- ===== Cart (lunch state: empty, like the screenshot) ===== -->
+<div class="section">
+  <div class="cart-title">🛒 Your cart</div>
+  <div class="cart-branch">Cainta Main Branch</div>
+  <div class="empty">No items yet.</div>
+  <div class="total-row"><span>Total</span><span>₱0</span></div>
+
+  <div class="sub-label">Payment method — tap to switch</div>
+  <div class="chips">
+    <input class="hide" type="radio" name="pay" id="pay1" checked><label class="chip" for="pay1">Cash</label>
+    <input class="hide" type="radio" name="pay" id="pay2"><label class="chip" for="pay2">GCash</label>
+    <input class="hide" type="radio" name="pay" id="pay3"><label class="chip" for="pay3">Maya</label>
+  </div>
+
+  <div class="sub-label">Pickup time (today)</div>
+  <div class="time-note">order by 7:30 PM — tap a time to switch</div>
+  <div class="time-slots">
+    <span class="time-slot passed">7:00 AM (passed)</span>
+    <input class="hide" type="radio" name="time" id="t1"><label class="time-slot" for="t1">9:00 AM</label>
+    <input class="hide" type="radio" name="time" id="t2"><label class="time-slot" for="t2">11:00 AM</label>
+    <input class="hide" type="radio" name="time" id="t3"><label class="time-slot" for="t3">1:00 PM</label>
+    <input class="hide" type="radio" name="time" id="t4"><label class="time-slot" for="t4">3:00 PM</label>
+    <input class="hide" type="radio" name="time" id="t5"><label class="time-slot" for="t5">5:00 PM</label>
+    <input class="hide" type="radio" name="time" id="t6"><label class="time-slot" for="t6">7:00 PM</label>
+  </div>
+
+  <span class="place-btn">Place order</span>
+</div>
+
+<!-- ===== Bottom nav ===== -->
+<div class="bottom-nav">
+  <div class="nav-item active"><a href="food_cart.html"><span class="nav-ico">🏠</span>Home</a></div>
+  <div class="nav-item"><a href="orders.html"><span class="nav-ico">📋</span>Orders</a></div>
+  <div class="nav-item">
+    <a href="updates.html"><div class="nav-wrap"><span class="nav-ico">🔔</span><span class="nav-badge">2</span></div>Updates</a>
+  </div>
+  <div class="nav-item"><a href="profile.html"><span class="nav-ico">👤</span>Profile</a></div>
+</div>
+
+</body>
+                                                                </html>
+  
