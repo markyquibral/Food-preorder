@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, redirect, url_for
 
 app = Flask(__name__)
@@ -11,12 +10,12 @@ def index():
 
 @app.route("/login")
 def login():
-    return render_template("Login.html")
+    return render_template("login.html")
 
 
 @app.route("/register")
 def register():
-    return render_template("Create_account.html")
+    return render_template("Signup.html")
 
 
 @app.route("/home")
@@ -31,7 +30,7 @@ def orders():
 
 @app.route("/updates")
 def updates():
-    return render_template("Updates.html")
+    return render_template("updates.html")
 
 
 @app.route("/profile")
@@ -46,27 +45,27 @@ def receipt():
 
 @app.route("/snacks")
 def snacks():
-    return render_template("Snacks_menu.html")
+    return render_template("snacks_menu.html")
 
 
 @app.route("/lunch")
 def lunch():
-    return render_template("Lunch_menu.html")
+    return render_template("lunch_menu.html")
 
 
 @app.route("/dinner")
 def dinner():
-    return render_template("Dinner_menu.html")
+    return render_template("dinner_menu.html")
 
 
 @app.route("/desserts")
 def desserts():
-    return render_template("Dessert_menu.html")
+    return render_template("dessert_menu.html")
 
 
 @app.route("/beverages")
 def beverages():
-    return render_template("Beverages_menu.html")
+    return render_template("beverages_menu.html")
 
 
 if __name__ == "__main__":
